@@ -75,9 +75,6 @@ export class SharedModule {
       },
       {
         name: 'Bateau'
-      },
-      {
-        name: 'Avion'
       }
     ];
     for (const c of arrayCategories) {
@@ -134,22 +131,6 @@ export class SharedModule {
       {
         type: 'Custom',
         categoryName: 'Moto'
-      },
-      {
-        type: 'Guerre',
-        categoryName: 'Avion'
-      },
-      {
-        type: 'Cargo',
-        categoryName: 'Avion'
-      },
-      {
-        type: 'Tourisme',
-        categoryName: 'Avion'
-      },
-      {
-        type: 'Ligne',
-        categoryName: 'Avion'
       },
     ];
     for (const t of arrayTypes) {
@@ -224,22 +205,6 @@ export class SharedModule {
       categoryName: 'Moto'
       },
       {
-      name: 'Boeing',
-      categoryName: 'Avion'
-      },
-      {
-      name: 'Airbus',
-      categoryName: 'Avion'
-      },
-      {
-      name: 'Dassault',
-      categoryName: 'Avion'
-      },
-      {
-      name: 'Cessna',
-      categoryName: 'Avion'
-      },
-      {
       name: 'Beneteau',
       categoryName: 'Bateau'
       },
@@ -254,11 +219,7 @@ export class SharedModule {
       {
       name: 'Zodiac',
       categoryName: 'Bateau'
-      },
-      {
-        name: 'Peugeot',
-        categoryName: 'Voiture'
-      }
+      }, 
     ];
     for (const m of arrayMarques) {
       const exists = await this.connection.getRepository(Marques).findOne({

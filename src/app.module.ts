@@ -4,7 +4,6 @@ import { AppService } from './app.service';
 import { VoituresModule } from './voitures/voitures.module';
 import { MotosModule } from './motos/motos.module';
 import { BateauxModule } from './bateaux/bateaux.module';
-import { AvionsModule } from './avions/avions.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { dirname } from 'path';
 import { SharedModule } from './shared/shared.module';
@@ -26,7 +25,6 @@ import { MarquesService } from './shared/marques/marques.service';
     VoituresModule,
     MotosModule,
     BateauxModule,
-    AvionsModule,
     SharedModule
   ],
   controllers: [AppController],
