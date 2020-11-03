@@ -1,22 +1,16 @@
 import { Marques } from "src/shared/marques/marques.entity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity('bateaux')
-export class Bateaux {
+@Entity('camions')
+export class Camions {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
     @Column()
-    energie: string;
+    genre: string;
 
     @Column()
-    longueur: string;
-
-    @Column()
-    place: string;
-
-    @Column()
-    puissance: string;
+    poids: string;
 
     @Column({
         type: 'datetime'

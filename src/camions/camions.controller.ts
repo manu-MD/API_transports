@@ -3,62 +3,58 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guards';
 import { MarquesCategories } from 'src/shared/marques/marques-categories.entity';
 import { MarquesCategoriesService } from 'src/shared/marques/marques-categories.service';
-import VoitureCreateDto from './dto/voiture-create.dto';
-import VoitureUpdateDto from './dto/voiture-update.dto';
-import VoituresDto from './dto/voiture.dto';
-import { Voitures } from './voitures.entity';
-import { VoituresService } from './voitures.service';
+import { Camions } from './camions.entity';
+import { CamionsService } from './camions.service';
+import CamionCreateDto from './dto/camion-create.dto';
+import CamionUpdateDto from './dto/camion-update.dto';
+import CamionsDto from './dto/camion.dto';
 
-@ApiTags('voitures')
-@Controller('voitures')
+@ApiTags('camions')
+@Controller('camions')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
-export class VoituresController {
+export class CamionsController {
 
     constructor(
-        private vs: VoituresService,
+        private cs: CamionsService,
         private mc: MarquesCategoriesService
-    ) {
+    ){}
 
-    }
-
-    // @UseGuards(JwtAuthGuard)
     @Get()
-    findAll(): Promise<VoituresDto[]> {
-        return this.vs.findAll();
+    findAll(): Promise<CamionsDto[]> {
+        return this.cs.findAll();
     }
 
     @Get(':id')
     findById(
         @Param('id') id: string, 
-    ): Promise<VoituresDto> {
-        return this.vs.findById(id);
+    ): Promise<CamionsDto> {
+        return this.cs.findById(id);
     }
 
     @Get('categories')
     findByCategories(): Promise<MarquesCategories[]> {
         return this.mc.findAll();
     }
-
     @Post()
     create(
-        @Body() voitureCreateDto: VoitureCreateDto
-    ): Promise<Voitures> {
-        return this.vs.create(voitureCreateDto);
+        @Body() camionCreateDto: CamionCreateDto
+    ): Promise<Camions> {        
+        return this.cs.create(camionCreateDto);
     }
 
     @Put(':id')
     update(
         @Param('id') id: string, 
-        @Body() voitureUpdateDto: VoitureUpdateDto
+        @Body() camionUpdateDto: CamionUpdateDto
     ) {
-        return this.vs.update(id, voitureUpdateDto);
+        return this.cs.update(id, camionUpdateDto);
     }
 
     @Delete(':id')
     remove(
         @Param('id') id: string
     ) {
-        return this.vs.remove(id);
+        return this.cs.remove(id);
     }
 }

@@ -37,8 +37,7 @@ export default class BateauxDto {
 
   @ApiProperty()
   @IsString()
-  readonly email: string;
-  
+  readonly email: string;  
 
   constructor(bateau: Bateaux) {
     this.id = bateau.id;

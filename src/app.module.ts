@@ -8,6 +8,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { dirname } from 'path';
 import { SharedModule } from './shared/shared.module';
 import { MarquesService } from './shared/marques/marques.service';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
+import { CamionsModule } from './camions/camions.module';
 
 @Module({
   imports: [
@@ -25,7 +28,10 @@ import { MarquesService } from './shared/marques/marques.service';
     VoituresModule,
     MotosModule,
     BateauxModule,
-    SharedModule
+    SharedModule,
+    UsersModule,
+    AuthModule,
+    CamionsModule
   ],
   controllers: [AppController],
   providers: [AppService],

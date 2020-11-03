@@ -11,7 +11,9 @@ export class Motos {
     @Column()
     cylindree: string;
 
-    @Column()          
+    @Column({
+        type: 'datetime'
+    })
     date: Date;
     
     @Column()

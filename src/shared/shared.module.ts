@@ -75,6 +75,9 @@ export class SharedModule {
       },
       {
         name: 'Bateau'
+      },
+      {
+        name: 'Camion'
       }
     ];
     for (const c of arrayCategories) {
@@ -219,7 +222,23 @@ export class SharedModule {
       {
       name: 'Zodiac',
       categoryName: 'Bateau'
-      }, 
+      },
+      {
+      name: 'Scania',
+      categoryName: 'Camion'
+      },
+      {
+      name: 'Volvo',
+      categoryName: 'Camion'
+      },
+      {
+      name: 'Man',
+      categoryName: 'Camion'
+      },
+      {
+      name: 'Mercedes',
+      categoryName: 'Camion'
+      },
     ];
     for (const m of arrayMarques) {
       const exists = await this.connection.getRepository(Marques).findOne({

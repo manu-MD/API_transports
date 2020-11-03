@@ -3,7 +3,7 @@ import { Marques } from "src/shared/marques/marques.entity";
 import { Types } from "src/shared/types/types.entity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity()
+@Entity('voitures')
 export class Voitures {
     @PrimaryGeneratedColumn('uuid')
     id: string;

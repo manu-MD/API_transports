@@ -1,7 +1,7 @@
 import { IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export default class BateauCreateDto {
+export default class BateauUpdateDto {
 
   @ApiProperty()
   @IsString()
@@ -24,6 +24,7 @@ export default class BateauCreateDto {
   readonly puissance: string;
   
   @ApiProperty()
+  @IsString()
   readonly date: Date;
   
   @ApiProperty()
