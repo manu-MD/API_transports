@@ -30,8 +30,7 @@ export class Bateaux {
     email: string;
     
     @ManyToOne(
-        () => Marques, 
-        // author => author.articles
+        () => Marques,
     )
     marque: Marques
 }

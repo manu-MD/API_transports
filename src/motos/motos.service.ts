@@ -12,8 +12,6 @@ import { Motos } from './motos.entity';
 export class MotosService {
     constructor(
         private connection: Connection
-        // @InjectRepository(Motos)
-        // private readonly motosRepository: Repository<Motos>,
     ){}
 
     async create(motoCreateDto: MotoCreateDto): Promise<Motos> {

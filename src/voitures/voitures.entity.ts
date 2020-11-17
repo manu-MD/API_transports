@@ -20,20 +20,17 @@ export class Voitures {
     email: string;
 
     @ManyToOne(
-        () => Marques, 
-        // author => author.articles
+        () => Marques,
     )
     marque: Marques;
 
     @ManyToOne(
-        () => Types, 
-        // author => author.articles
+        () => Types,
     )
     type: Types;
 
     @ManyToOne(
-        () => Couleurs, 
-        // author => author.articles
+        () => Couleurs,        
     )
     couleur: Couleurs;
 }
