@@ -1,16 +1,13 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { TypesCategories } from "./types-categories.entity";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Types {
     @PrimaryGeneratedColumn('uuid')
     id: string;
- 
+
     @Column()
     type: string;
-
-    @ManyToOne(
-        () => TypesCategories
-    )
-    category: TypesCategories;
+    
+    @Column()
+    category: string;
 }

@@ -1,8 +1,5 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { Observable } from 'rxjs';
-import { MarquesCategories } from 'src/shared/marques/marques-categories.entity';
-import { MarquesCategoriesService } from 'src/shared/marques/marques-categories.service';
 import { Marques } from './marques.entity';
 import { MarquesService } from './marques.service';
 
@@ -12,14 +9,12 @@ export class MarquesController {
 
     constructor(
         private ms: MarquesService
-        // private bs: BateauxService,
-        // private mc: MarquesCategoriesService
     ) {
     }
 
     @Get()
-    findAll(): Promise<Marques[]> {
-        return this.ms.findAll();
+    findAll(@Query('category') category): Promise<Marques[]> {        
+        return this.ms.findAll(category);
     }
 
     // @Get('categories')

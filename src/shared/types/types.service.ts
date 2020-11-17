@@ -14,7 +14,15 @@ export class TypesService {
         return this.typesRepository.save(Types);
     }
 
-    findAll(): Promise<Types[]> {
-        return this.typesRepository.find();
+    findAll(category?: string): Promise<Types[]> {
+        const params: any = {
+            order: {type: 'ASC'}
+        };
+        if(category){
+            params.where = {
+                category
+            }
+        }
+        return this.typesRepository.find(params);
     }
 }

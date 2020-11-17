@@ -11,7 +11,9 @@ export class Voitures {
     @Column()
     date: Date;
 
-    @Column()
+    @Column({
+        nullable: true
+    })
     observation: string;
 
     @Column()

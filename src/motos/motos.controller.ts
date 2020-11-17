@@ -1,8 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guards';
-import { MarquesCategories } from 'src/shared/marques/marques-categories.entity';
-import { MarquesCategoriesService } from 'src/shared/marques/marques-categories.service';
 import MotoCreateDto from './dto/moto-create.dto';
 import MotoUpdateDto from './dto/moto-update.dto';
 import MotosDto from './dto/moto.dto';
@@ -11,13 +9,10 @@ import { MotosService } from './motos.service';
 
 @ApiTags('motos')
 @Controller('motos')
-@ApiBearerAuth()
-@UseGuards(JwtAuthGuard)
 export class MotosController {
 
     constructor(
         private ms: MotosService,
-        private mc: MarquesCategoriesService
     ) {
         
     }
@@ -27,18 +22,17 @@ export class MotosController {
     }
 
     @Get(':id')
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
     findById(
         @Param('id') id: string, 
     ): Promise<MotosDto> {
         return this.ms.findById(id);
     }
 
-    @Get('categories')
-    findByCategories(): Promise<MarquesCategories[]> {
-        return this.mc.findAll();
-    }
-
      @Post()
+     @ApiBearerAuth()
+     @UseGuards(JwtAuthGuard)
     create(
         @Body() motoCreateDto: MotoCreateDto
     ): Promise<Motos> {
@@ -46,6 +40,8 @@ export class MotosController {
     }
 
     @Put(':id')
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
     update(
         @Param('id') id: string, 
         @Body() motoUpdateDto: MotoUpdateDto
@@ -54,6 +50,8 @@ export class MotosController {
     }
 
     @Delete(':id')
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
     remove(
         @Param('id') id: string
     ) {

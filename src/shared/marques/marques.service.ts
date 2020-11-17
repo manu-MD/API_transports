@@ -14,7 +14,15 @@ export class MarquesService {
         return this.marquesRepository.save(Marques);
     }
 
-    findAll(): Promise<Marques[]> {
-        return this.marquesRepository.find();
+    findAll(category?: string): Promise<Marques[]> {
+        const params: any = {
+            order: {name: 'ASC'}
+        };
+        if(category){
+            params.where = {
+                category: category
+            }
+        }        
+        return this.marquesRepository.find(params);
     }
 }

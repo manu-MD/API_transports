@@ -2,19 +2,14 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Couleurs } from './couleurs/couleurs.entity';
 import { CouleursService } from './couleurs/couleurs.service';
-import { MarquesCategories } from './marques/marques-categories.entity';
-import { MarquesCategoriesService } from './marques/marques-categories.service';
 import { Marques } from './marques/marques.entity';
 import { MarquesService } from './marques/marques.service';
-import { TypesCategories } from './types/types-categories.entity';
-import { TypesCategoriesService } from './types/types-categories.service';
 import { Types } from './types/types.entity';
 import { TypesService } from './types/types.service';
 import { MarquesController } from './marques/marques.controller';
 import { Connection } from 'typeorm';
 import { TypeController } from './types/types.controller';
 import { CouleurController } from './couleurs/couleurs.controller';
-import { CouleursCategories } from './couleurs/couleurs-categories.entity';
 
 @Module({
   controllers: [
@@ -26,26 +21,16 @@ import { CouleursCategories } from './couleurs/couleurs-categories.entity';
     TypeOrmModule.forFeature([
       Couleurs, 
       Marques, 
-      Types,
-      MarquesCategories, 
-      TypesCategories,
-      CouleursCategories     
+      Types,   
     ])
   ],
   providers: [
     CouleursService, 
     MarquesService, 
     TypesService,
-    MarquesCategoriesService,
-    TypesCategoriesService,
     TypeOrmModule,
-    CouleursCategories
   ],
-  exports: [
-    MarquesCategoriesService,
-    TypesCategoriesService,
-    CouleursCategories
-  ]
+  exports: []
 })
 export class SharedModule {
   
@@ -56,7 +41,7 @@ export class SharedModule {
 
   async onModuleInit() {
     try {
-      await this.createTypesCategories();
+      // await this.createTypesCategories();
       await this.createTypes();
       await this.createMarques();
       await this.createCouleurs();
@@ -65,33 +50,33 @@ export class SharedModule {
     }
   }
 
-  async createTypesCategories() {
-    const arrayCategories = [
-      {
-        name: 'Voiture'
-      },
-      { 
-        name: 'Moto'
-      },
-      {
-        name: 'Bateau'
-      },
-      {
-        name: 'Camion'
-      }
-    ];
-    for (const c of arrayCategories) {
-      const exists = await this.connection.getRepository(TypesCategories).findOne({
-        where: {
-          name: c.name
-        }
-      });
-      if (!exists) {
-        const categoryObj = this.connection.getRepository(TypesCategories).create(c);
-        await this.connection.getRepository(TypesCategories).save(categoryObj);
-      }
-    }
-  }
+  // async createTypesCategories() {
+  //   const arrayCategories = [
+  //     {
+  //       name: 'Voiture'
+  //     },
+  //     { 
+  //       name: 'Moto'
+  //     },
+  //     {
+  //       name: 'Bateau'
+  //     },
+  //     {
+  //       name: 'Camion'
+  //     }
+  //   ];
+  //   for (const c of arrayCategories) {
+  //     const exists = await this.connection.getRepository(TypesCategories).findOne({
+  //       where: {
+  //         name: c.name
+  //       }
+  //     });
+  //     if (!exists) {
+  //       const categoryObj = this.connection.getRepository(TypesCategories).create(c);
+  //       await this.connection.getRepository(TypesCategories).save(categoryObj);
+  //     }
+  //   }
+  // }
 
   async createTypes() {
     const arrayTypes = [
@@ -143,14 +128,14 @@ export class SharedModule {
         }
       });
     if (!exists) {
-      const category = await this.connection.getRepository(TypesCategories).findOne({
-        where: {
-          name: t.categoryName
-        }
-    });
+      // const category = await this.connection.getRepository(TypesCategories).findOne({
+      //   where: {
+      //     name: t.categoryName
+      //   }
+    // });
         const tObj = this.connection.getRepository(Types).create({
           type: t.type,
-          category,
+          category: t.categoryName
         });
         await this.connection.getRepository(Types).save(tObj);
       }
@@ -247,14 +232,14 @@ export class SharedModule {
         }
       });
       if (!exists) {
-        const category = await this.connection.getRepository(TypesCategories).findOne({
-          where: {
-            name: m.categoryName
-          }
-        });
+        // const category = await this.connection.getRepository(TypesCategories).findOne({
+        //   where: {
+        //     name: m.categoryName
+        //   }
+        // });
         const tObj = this.connection.getRepository(Marques).create({
           name: m.name,
-          category,
+          category: m.categoryName,
         });
         await this.connection.getRepository(Marques).save(tObj);
       }

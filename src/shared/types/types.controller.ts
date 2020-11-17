@@ -1,4 +1,4 @@
-import { Controller, Get, Type } from "@nestjs/common";
+import { Controller, Get, Query, Type } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { Types } from "./types.entity";
 import { TypesService } from "./types.service";
@@ -14,7 +14,7 @@ export class TypeController {
     }
 
     @Get()
-    findAll(): Promise<Types[]> {
-        return this.ts.findAll();
+    findAll(@Query('category') category): Promise<Types[]> {
+        return this.ts.findAll(category);
     }
 }
