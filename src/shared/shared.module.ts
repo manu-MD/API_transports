@@ -50,34 +50,6 @@ export class SharedModule {
     }
   }
 
-  // async createTypesCategories() {
-  //   const arrayCategories = [
-  //     {
-  //       name: 'Voiture'
-  //     },
-  //     { 
-  //       name: 'Moto'
-  //     },
-  //     {
-  //       name: 'Bateau'
-  //     },
-  //     {
-  //       name: 'Camion'
-  //     }
-  //   ];
-  //   for (const c of arrayCategories) {
-  //     const exists = await this.connection.getRepository(TypesCategories).findOne({
-  //       where: {
-  //         name: c.name
-  //       }
-  //     });
-  //     if (!exists) {
-  //       const categoryObj = this.connection.getRepository(TypesCategories).create(c);
-  //       await this.connection.getRepository(TypesCategories).save(categoryObj);
-  //     }
-  //   }
-  // }
-
   async createTypes() {
     const arrayTypes = [
       {

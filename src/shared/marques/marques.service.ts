@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import MarqueCreateDto from './dto/marque-create-dto';
 import { Marques } from './marques.entity';
 
 @Injectable()
@@ -10,8 +11,8 @@ export class MarquesService {
         private readonly marquesRepository: Repository<Marques>,
     ){}
 
-    create(Marques: Marques): Promise<Marques> {
-        return this.marquesRepository.save(Marques);
+    create(marqueCreateDto: MarqueCreateDto): Promise<Marques> {
+        return this.marquesRepository.save(marqueCreateDto);
     }
 
     findAll(category?: string): Promise<Marques[]> {
