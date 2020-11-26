@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guards';
 import { Marques } from './marques.entity';
@@ -23,6 +23,8 @@ export class MarquesController {
     }
 
     @Get(':id')
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
     findById(
         @Param('id') id: string, 
     ): Promise<Marques> {
@@ -30,6 +32,8 @@ export class MarquesController {
     }
 
     @Post()
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
     create(
         @Body() marqueCreateDto: MarqueCreateDto
     ): Promise<Marques> {        
@@ -37,11 +41,22 @@ export class MarquesController {
     }
 
     @Put(':id')
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
     update(
         @Param('id') id: string, 
         @Body() marqueUpdateDto: MarqueUpdateDto
     ) {
         return this.ms.update(id, marqueUpdateDto);
+    }
+
+    @Delete(':id')
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
+    remove(
+    @Param('id') id: string
+    ) {
+        return this.ms.remove(id);
     }
 
 }
