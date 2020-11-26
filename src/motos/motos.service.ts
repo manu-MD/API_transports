@@ -42,9 +42,9 @@ export class MotosService {
      
     async update(
         id,
-        MotoUpdateDto: MotoUpdateDto
+        motoUpdateDto: MotoUpdateDto
         ) {
-        const { marqueId, typeId, couleurId, cylindree, date, renseignement, email } = MotoUpdateDto;
+        const { marqueId, typeId, couleurId, cylindree, date, renseignement, email } = motoUpdateDto;
     
         // Recherche de la voiture à modifier
         await this.connection.getRepository(Motos).findOneOrFail(id);
