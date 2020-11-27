@@ -12,15 +12,18 @@ export class AuthService {
   ){}
 
   async validateUser(email: string, pass: string): Promise<any> {
-    
+    // Recherche l'utilisateur par son mail
     const user = await this.usersService.findByEmail(email);
+    // Arrete le processus en cas d'erreur
     if (!user) {
       throw new HttpException(
         'Invalid email or password.',
         HttpStatus.BAD_REQUEST,
       );
     }
+    // Compare les mots de passe cryptés
     const isMatch = await compare(pass, user.password);
+    // Arrete le processus en cas d'erreur
     if (!isMatch) {
       throw new HttpException(
         'Invalid email or password.',
@@ -28,6 +31,7 @@ export class AuthService {
       );
     }
 
+    // Renvoi du user trouvé
     return user;
   }
 
@@ -35,10 +39,9 @@ export class AuthService {
     const user = await this.validateUser(body.email, body.password);
 
     const payload = { email: user.email, sub: user.userId };
+    // Renvoi du token d'authentification
     return {
       access_token: this.jwtService.sign(payload),
     };
   }
-
-
 }
