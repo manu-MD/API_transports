@@ -6,6 +6,7 @@ import { JwtAuthGuard } from '../../auth/jwt-auth.guards';
 
 @ApiTags('couleurs')
 @Controller('couleurs')
+@UseGuards(JwtAuthGuard)
 export class CouleurController {
 
     constructor(
@@ -14,11 +15,12 @@ export class CouleurController {
     }
 
     // Requête Get findAll
-    @Get() findAll(): Promise<Couleurs[]> {
+    @Get()
+    findAll(): Promise<Couleurs[]> {
         return this.cs.findAll();
     }
 
-    // Requête Get findById
+    // Requête Get findById)
     @Get(':id')
     findById(@Param('id') id: string,): Promise<Couleurs> {
         return this.cs.findById(id);
