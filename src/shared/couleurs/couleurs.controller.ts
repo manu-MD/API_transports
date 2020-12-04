@@ -1,8 +1,9 @@
-import { Body, Controller, Delete, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Couleurs } from "./couleurs.entity";
 import { CouleursService } from "./couleurs.service";
 import { JwtAuthGuard } from '../../auth/jwt-auth.guards';
+import CouleurUpdateDto from './dto/couleur-update-dto';
 
 @ApiTags('couleurs')
 @Controller('couleurs')
@@ -36,5 +37,12 @@ export class CouleurController {
     @Delete(':id')
     delete(@Param('id') id: string) {
         return this.cs.delete(id);
+    }
+
+    // Requête Update
+    @Put(':id')
+    update(@Param('id') id: string, @Body() couleurUpdateDto: CouleurUpdateDto
+    ) {
+        return this.cs.update(id, couleurUpdateDto);
     }
 }

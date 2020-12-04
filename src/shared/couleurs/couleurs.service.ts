@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, DeleteResult, Repository } from 'typeorm';
 import { Couleurs } from './couleurs.entity';
+import CouleurUpdateDto from './dto/couleur-update-dto';
 
 @Injectable()
 export class CouleursService {
@@ -29,5 +30,22 @@ export class CouleursService {
     // Méthode Delete (supprimer ID de la couleur)
     async delete(id): Promise<DeleteResult> {
         return await this.couleursRepository.delete(id);
+    }
+
+    // Méthode Update (Modifier la couleur)
+    async update(
+      id, couleurUpdateDto: CouleurUpdateDto
+    ) {
+        const { couleur, } = couleurUpdateDto;
+        // Recherche couleur correspondant à id
+        const couleurs = await this.findById(id);
+        couleurs.couleur = couleur;
+
+        try {
+            // Met à jour la BDD
+            await this.connection.getRepository(Couleurs).save(couleurs);
+        } catch(e) {
+            console.log(e);
+        }
     }
 }
