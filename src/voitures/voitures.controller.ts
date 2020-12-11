@@ -26,7 +26,7 @@ export class VoituresController {
     @ApiBearerAuth()
     @UseGuards(JwtAuthGuard)
     findById(
-        @Param('id') id: string, 
+        @Param('id') id: string,
     ): Promise<VoituresDto> {
         return this.vs.findById(id);
     }
@@ -44,10 +44,18 @@ export class VoituresController {
     @ApiBearerAuth()
     @UseGuards(JwtAuthGuard)
     update(
-        @Param('id') id: string, 
+        @Param('id') id: string,
         @Body() voitureUpdateDto: VoitureUpdateDto
     ) {
         return this.vs.update(id, voitureUpdateDto);
+    }
+
+    @Put(':id/dispo')
+    updateDispo(
+      @Param('id') id: boolean,
+      // @Body() voitureUpdateDto: VoitureUpdateDto
+    ) {
+        return this.vs.updateDispo(id);
     }
 
     @Delete(':id')

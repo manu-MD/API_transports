@@ -16,10 +16,13 @@ export class Users {
     email: string;
 
     @Column()
+    role: string;
+
+    @Column()
     password: string;
 
     @BeforeInsert()
     async hashPassword() {
       this.password = await bcrypt.hash(this.password, 10);
-    }  
+    }
 }

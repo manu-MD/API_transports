@@ -13,7 +13,7 @@ export class VoituresService {
   constructor(
     private connection: Connection
   ) {
-    
+
   }
 
   async create(voitureCreateDto: VoitureCreateDto): Promise<Voitures> {
@@ -65,6 +65,27 @@ export class VoituresService {
         couleur,
         marque,
         type,
+      });
+    } catch(e) {
+      console.log(e);
+    }
+  }
+
+  async updateDispo(
+    id,
+    // voitureUpdateDto: VoitureUpdateDto
+  ) {
+    // console.log(voitureUpdateDto);
+    // const { status } = voitureUpdateDto;
+
+    // Recherche de la voiture à modifier
+    const exists = await this.connection.getRepository(Voitures).findOneOrFail(id);
+    const status = !exists.status;
+
+    try {
+      // Met à jour la voiture en base
+      await this.connection.getRepository(Voitures).update(id, {
+        status,
       });
     } catch(e) {
       console.log(e);
