@@ -16,7 +16,7 @@ export class UsersService {
   }
 
   async create( userCreateDto: UserCreateDto):Promise<Users> {
-      const{ lastName, firstName, email, password} = userCreateDto;
+      const{ lastName, firstName, email, password, role} = userCreateDto;
       try{
         // encrypte le mot de passe
         // const pass = await bcrypt.hash(password, 10);
@@ -26,20 +26,21 @@ export class UsersService {
           lastName,
           firstName,
           email,
-          password
+          password,
+          role
         });
       // sauvegarde l'objet user en bdd
         return await this.connection.getRepository(Users).save(userObj);
       } catch(e){
-        console.log(e); 
-      }     
+        console.log(e);
+      }
   }
 
   async update(
     id,
     userUpdateDto: UserUpdateDto
     ) {
-    const { lastName, firstName, email } = userUpdateDto;
+    const { lastName, firstName, email, role } = userUpdateDto;
 
     // Recherche de l'utilisateur à modifier
     const exists = await this.connection.getRepository(Users).findOneOrFail(id);
@@ -49,7 +50,8 @@ export class UsersService {
       await this.connection.getRepository(Users).update(id, {
         lastName,
         firstName,
-        email
+        email,
+        role
       });
     } catch(e) {
       console.log(e);
@@ -64,7 +66,7 @@ export class UsersService {
     }
   }
 
-  
+
 
   async findById(id): Promise<Users> {
       try {
@@ -84,10 +86,10 @@ export class UsersService {
   }
 
   async findByEmail(email: string): Promise<Users | undefined> {
-    try {   
+    try {
       return await this.connection.getRepository(Users).findOne({ where: { email }});
     } catch(e) {
       console.log(e);
     }
-  }  
+  }
 }

@@ -1,6 +1,12 @@
 import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 const bcrypt = require('bcrypt');
 
+
+// export enum Role {
+//     User = 'User',
+//     Admin = 'Admin'
+// }
+
 @Entity()
 export class Users {
     @PrimaryGeneratedColumn('uuid')
@@ -17,6 +23,13 @@ export class Users {
 
     @Column()
     role: string;
+
+    // @Column({
+    //     type: 'enum',
+    //     enum: Role,
+    //     default: [Role.User]
+    // })
+    // role: Role;
 
     @Column()
     password: string;
