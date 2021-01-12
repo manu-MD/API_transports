@@ -10,6 +10,7 @@ import { MarquesController } from './marques/marques.controller';
 import { Connection } from 'typeorm';
 import { TypeController } from './types/types.controller';
 import { CouleurController } from './couleurs/couleurs.controller';
+import { PhotosModule } from './photos/photos.module';
 
 @Module({
   controllers: [
@@ -22,7 +23,8 @@ import { CouleurController } from './couleurs/couleurs.controller';
       Couleurs, 
       Marques, 
       Types,   
-    ])
+    ]),
+    PhotosModule
   ],
   providers: [
     CouleursService, 
