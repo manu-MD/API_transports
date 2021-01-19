@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { Couleurs } from 'src/shared/couleurs/couleurs.entity';
 import { Marques } from 'src/shared/marques/marques.entity';
 import { Types } from 'src/shared/types/types.entity';
-import { Connection, Repository } from 'typeorm';
+import { Connection } from 'typeorm';
 import VoitureCreateDto from './dto/voiture-create.dto';
 import VoitureUpdateDto from './dto/voiture-update.dto';
 import VoituresDto from './dto/voiture.dto';
@@ -13,10 +13,10 @@ export class VoituresService {
   constructor(
     private connection: Connection
   ) {
-
   }
 
-  async create(voitureCreateDto: VoitureCreateDto): Promise<Voitures> {
+  async create(voitureCreateDto: VoitureCreateDto, file ): Promise<Voitures> {
+    console.log(voitureCreateDto);
     const { marqueId, typeId, couleurId, date, observation, email } = voitureCreateDto;
     try {
       // Recherche l'objet couleur correspondant au couleurId posté
@@ -33,6 +33,8 @@ export class VoituresService {
         couleur,
         marque,
         type,
+        photo: file.filename,
+        mimetype: file.mimetype
       });
       // Sauvegarde l'objet en bdd
       return await this.connection.getRepository(Voitures).save(voitureObj);
@@ -41,10 +43,7 @@ export class VoituresService {
     }
   }
 
-  async update(
-    id,
-    voitureUpdateDto: VoitureUpdateDto
-    ) {
+  async update(id, voitureUpdateDto: VoitureUpdateDto, file) {
     const { marqueId, typeId, couleurId, date, observation, email } = voitureUpdateDto;
 
     // Recherche de la voiture à modifier
@@ -65,6 +64,8 @@ export class VoituresService {
         couleur,
         marque,
         type,
+        photo: file.filename,
+        mimetype: file.mimetype
       });
     } catch(e) {
       console.log(e);
@@ -106,7 +107,7 @@ export class VoituresService {
     }
   }
 
-  async findById(id): Promise<VoituresDto> {
+  async findById(id): Promise<Voitures> {
     try {
       return await this.connection.getRepository(Voitures).findOneOrFail(id, {
         relations: [

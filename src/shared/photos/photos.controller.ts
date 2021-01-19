@@ -7,5 +7,6 @@ export class PhotosController {
   @UseInterceptors(FileInterceptor("photo", { dest: "./uploads" }))
   uploadSingle(@UploadedFile() file) {
     console.log(file);
+    return file;
   }
 }

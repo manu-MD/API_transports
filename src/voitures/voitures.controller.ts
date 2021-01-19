@@ -1,4 +1,15 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Post,
+    Put, Res,
+    UploadedFile,
+    UseGuards,
+    UseInterceptors,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guards';
 import VoitureCreateDto from './dto/voiture-create.dto';
@@ -6,6 +17,9 @@ import VoitureUpdateDto from './dto/voiture-update.dto';
 import VoituresDto from './dto/voiture.dto';
 import { Voitures } from './voitures.entity';
 import { VoituresService } from './voitures.service';
+import { FileInterceptor } from '@nestjs/platform-express';
+import * as fs from 'fs';
+import { ReadStream } from 'fs';
 
 @ApiTags('voitures')
 @Controller('voitures')
@@ -31,23 +45,47 @@ export class VoituresController {
         return this.vs.findById(id);
     }
 
+    @Get('/photo/:id')
+    // @ApiBearerAuth()
+    // @UseGuards(JwtAuthGuard)
+    async getPhoto(
+      @Param('id') id: string,
+      @Res() response,
+    ): Promise<string> {
+        const voiture = await this.vs.findById(id);
+        if (voiture.photo) {
+            console.log(`${process.cwd()}/uploads/${voiture.photo}`);
+            response.setHeader('Content-Type', voiture.mimetype );
+            var bitmap = fs.readFileSync(`${process.cwd()}/uploads/${voiture.photo}`);
+            // convert binary data to base64 encoded string
+            // @ts-ignore
+            return new Buffer.from(bitmap).toString('base64');
+        }
+        return null
+    }
+
     @Post()
     @ApiBearerAuth()
     @UseGuards(JwtAuthGuard)
+    @UseInterceptors(FileInterceptor("photo", { dest: "./uploads" }))
     create(
-        @Body() voitureCreateDto: VoitureCreateDto
+        @Body() voitureCreateDto: VoitureCreateDto,
+        @UploadedFile() file,
     ): Promise<Voitures> {
-        return this.vs.create(voitureCreateDto);
+        console.log(voitureCreateDto, file)
+        return this.vs.create(voitureCreateDto, file);
     }
 
     @Put(':id')
     @ApiBearerAuth()
     @UseGuards(JwtAuthGuard)
+    @UseInterceptors(FileInterceptor("photo", { dest: "./uploads" }))
     update(
         @Param('id') id: string,
-        @Body() voitureUpdateDto: VoitureUpdateDto
+        @Body() voitureUpdateDto: VoitureUpdateDto,
+        @UploadedFile() file,
     ) {
-        return this.vs.update(id, voitureUpdateDto);
+        return this.vs.update(id, voitureUpdateDto, file);
     }
 
     @Put(':id/dispo')

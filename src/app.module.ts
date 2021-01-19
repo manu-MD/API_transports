@@ -19,7 +19,7 @@ import { CamionsModule } from './camions/camions.module';
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: '',
+      password: 'root',
       database: 'moyens_de_transports',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,

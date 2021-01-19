@@ -19,8 +19,8 @@ export class Voitures {
     @Column()
     email: string;
 
-    @Column()
-    status: boolean;
+    @Column({default: false})
+    status?: boolean;
 
     @ManyToOne(
         () => Marques,
@@ -36,4 +36,10 @@ export class Voitures {
         () => Couleurs,
     )
     couleur: Couleurs;
+
+    @Column({nullable: true})
+    photo: string;
+
+    @Column({nullable: true})
+    mimetype: string;
 }
