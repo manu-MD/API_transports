@@ -19,7 +19,7 @@ import { Voitures } from './voitures.entity';
 import { VoituresService } from './voitures.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import * as fs from 'fs';
-import { ReadStream } from 'fs';
+import { createReadStream, ReadStream } from 'fs';
 
 @ApiTags('voitures')
 @Controller('voitures')
@@ -56,10 +56,10 @@ export class VoituresController {
         if (voiture.photo) {
             console.log(`${process.cwd()}/uploads/${voiture.photo}`);
             response.setHeader('Content-Type', voiture.mimetype );
-            var bitmap = fs.readFileSync(`${process.cwd()}/uploads/${voiture.photo}`);
-            // convert binary data to base64 encoded string
-            // @ts-ignore
-            return new Buffer.from(bitmap).toString('base64');
+            console.log(fs.existsSync(`${process.cwd()}/uploads/${voiture.photo}`));
+            const path = `${process.cwd()}/uploads/${voiture.photo}`;
+            const stream = createReadStream(path);
+            stream.pipe(response);
         }
         return null
     }
